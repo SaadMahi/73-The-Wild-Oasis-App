@@ -11,16 +11,6 @@ import Settings from './pages/Settings';
 import Users from './pages/Users';
 import AppLayout from './ui/AppLayout';
 
-/** ADDING CHILD ROUTES
- * we simply create a component named AppLayout
- * then create a Route of this and place other Route as children
- * which we want to nest within the AppLayout, that's it.
- *
- * Now how do we display these childrens within the Applayout route, for
- * that we will use the <Outlet> component
- * ! fig: 1
- */
-
 function App() {
   return (
     <>
