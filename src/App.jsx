@@ -9,24 +9,15 @@ import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
 import Settings from './pages/Settings';
 import Users from './pages/Users';
+import AppLayout from './ui/AppLayout';
 
-/** REACT ROUTER
- * 1) install react router
- * * npm i react-router-dom
+/** ADDING CHILD ROUTES
+ * we simply create a component named AppLayout
+ * then create a Route of this and place other Route as children
+ * which we want to nest within the AppLayout, that's it.
  *
- * 2) As we won't be using data fetching features in this application
- * therefore we can go back setting up our routes in declarative way
- * i) so first comes the <BrowserRouter></BrowserRouter>
- * ii) then within this comes the <Routes></Routes> which is the one that figures our that
- * which route matches the URL
- * iii) then for each route we will have one route element which will be self closing
- * elements untill they have child routes
- *
- * 3) next let's set the routes, also keep an default route for default route
- * use 'index' props to set default and use 'replace' to replace the URL in the
- * history stack and then just the route using 'to', so by using 'to' page
- * will be directed to that URL in 'to'
- * * <Navigatage replace to='dashboard' />
+ * Now how do we display these childrens within the Applayout route, for
+ * that we will use the <Outlet> component
  * ! fig: 1
  */
 
@@ -36,14 +27,17 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate replace to='dashboard' />} />
-          <Route path='dashboard' element={<Dashboard />} />
-          <Route path='account' element={<Account />} />
-          <Route path='bookings' element={<Bookings />} />
-          <Route path='cabins' element={<Cabins />} />
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate replace to='dashboard' />} />
+            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='account' element={<Account />} />
+            <Route path='bookings' element={<Bookings />} />
+            <Route path='cabins' element={<Cabins />} />
+            <Route path='settings' element={<Settings />} />
+            <Route path='users' element={<Users />} />
+          </Route>
+
           <Route path='login' element={<Login />} />
-          <Route path='settings' element={<Settings />} />
-          <Route path='users' element={<Users />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

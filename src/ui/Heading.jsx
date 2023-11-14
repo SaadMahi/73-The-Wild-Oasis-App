@@ -21,7 +21,6 @@ const Heading = styled.h1`
     `}
 
     line-height: 1.4;
-  color: var(--color-blue-100);
 `;
 
 export default Heading;
