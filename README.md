@@ -1,45 +1,31 @@
-# React Cabins Component
+# React Application Description
 
-The provided code defines a React component named `Cabins` that utilizes the Supabase client to fetch cabin data from a Supabase database. The `getCabins` function is responsible for asynchronous data retrieval from the 'cabins' table. It logs the fetched data to the console and appropriately handles errors.
+The provided code is a React application utilizing the React Router library for navigation and the React Query library for managing data fetching and caching. Below is a breakdown of the code:
 
-## Functionalities
+## Application Structure
 
-- **Supabase Integration:**
+The application is organized as a single-page web application using React. It leverages the React Router library to handle navigation and consists of multiple pages/components, with each page represented by a corresponding file in the 'pages' directory.
 
-  - The code includes an import statement for the Supabase client:
-    ```javascript
-    import supabase from './supabase';
-    ```
+## Main Entry Point
 
-- **Data Retrieval Function:**
+The primary entry point is the 'App' component, which serves as the root component for the entire application. Inside the 'App' component, a `QueryClient` is created using the `QueryClient` class from the '@tanstack/react-query' library. The `QueryClient` is configured with default options, specifying a stale time of 60 seconds for query data.
 
-  - The `getCabins` function asynchronously fetches data from the 'cabins' table in the Supabase database:
-    ```javascript
-    export async function getCabins() {
-      // Code for data retrieval from Supabase
-    }
-    ```
-    It ensures proper error handling and either returns the fetched data or throws an error if the data cannot be loaded.
+## React Query Integration
 
-- **React Component - Cabins:**
+The 'QueryClientProvider' component is then used to wrap the entire application, providing the `QueryClient` to the application tree. This integration enables the use of React Query for managing and caching data throughout the app.
 
-  - The `Cabins` component is a React functional component that employs the `useEffect` hook to fetch and log cabin data when the component mounts:
+## Development Tools
 
-    ```javascript
-    import { useEffect } from 'react';
-    import Heading from '../ui/Heading';
-    import Row from '../ui/Row';
-    import { getCabins } from '../services/apiCabins';
+The 'ReactQueryDevtools' component is included to provide development tools for debugging and monitoring the state of the React Query cache. These tools can be accessed by clicking on a flower icon within the application.
 
-    function Cabins() {
-      // Code for component rendering and data fetching
-    }
+## Client-Side Routing
 
-    export default Cabins;
-    ```
+The application employs the 'BrowserRouter' component from 'react-router-dom' to enable client-side routing. Inside the 'Routes' component, different routes are defined for various pages, including 'Dashboard', 'Account', 'Bookings', 'Cabins', 'Settings', and 'Users'. Each route is associated with a corresponding component and is nested within an 'AppLayout' component.
 
-    The component renders a heading indicating "All cabins," a test paragraph, and an image sourced from Supabase storage. The `useEffect` hook ensures the data-fetching process is triggered on component mount.
+## Additional Routes
 
-## Purpose
+In addition to the main routes, there is a login route ('login') and a wildcard route ('\*') for handling page-not-found scenarios. These routes render the 'Login' and 'PageNotFound' components, respectively.
 
-This code serves as a foundational structure for displaying and managing cabin data in a React application.
+## Summary
+
+In summary, the code sets up a React application with client-side routing, data fetching, and caching capabilities using React Router and React Query.
