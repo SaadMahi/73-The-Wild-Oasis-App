@@ -1,31 +1,34 @@
-# React Application Description
+# React CabinTable Component
 
-The provided code is a React application utilizing the React Router library for navigation and the React Query library for managing data fetching and caching. Below is a breakdown of the code:
+This code snippet is a React component named `CabinTable` that utilizes the React Query library to fetch and manage data from an API. The component is designed to display a table of cabin-related information and incorporates styled components for a visually appealing layout. Below is a description of the major components and functionalities within the code:
 
-## Application Structure
+## React Query Integration:
 
-The application is organized as a single-page web application using React. It leverages the React Router library to handle navigation and consists of multiple pages/components, with each page represented by a corresponding file in the 'pages' directory.
+- The component imports the `useQuery` hook from the `@tanstack/react-query` library to manage data fetching efficiently.
+- The `getCabins` function from the `../../services/apiCabins` file is used as the query function to fetch cabin-related data.
 
-## Main Entry Point
+## Styled Components:
 
-The primary entry point is the 'App' component, which serves as the root component for the entire application. Inside the 'App' component, a `QueryClient` is created using the `QueryClient` class from the '@tanstack/react-query' library. The `QueryClient` is configured with default options, specifying a stale time of 60 seconds for query data.
+- Custom styled components are defined using the `styled-components` library to create a visually appealing table layout.
+- The `Table` component represents the overall container for the table, styled with borders, background color, and rounded corners.
+- The `TableHeader` component represents the header of the table, with styled columns for different cabin attributes like name, capacity, price, and discount.
 
-## React Query Integration
+## Fetching and Displaying Data:
 
-The 'QueryClientProvider' component is then used to wrap the entire application, providing the `QueryClient` to the application tree. This integration enables the use of React Query for managing and caching data throughout the app.
+- The `useQuery` hook is used to fetch data, and the result (loading state, data, or error) is destructured for further use.
+- The `Table` and `TableHeader` components are utilized to structure the HTML, and the data is mapped over to create `CabinRow` components for each cabin.
+- The `isLoading` state is used to display a custom spinner while the data is being fetched.
 
-## Development Tools
+## Date Handling:
 
-The 'ReactQueryDevtools' component is included to provide development tools for debugging and monitoring the state of the React Query cache. These tools can be accessed by clicking on a flower icon within the application.
+- There's a comment suggesting the installation of the `date-fns` library to handle date calculations, although the actual usage of this library is not present in the provided code.
 
-## Client-Side Routing
+## Accessibility Improvement:
 
-The application employs the 'BrowserRouter' component from 'react-router-dom' to enable client-side routing. Inside the 'Routes' component, different routes are defined for various pages, including 'Dashboard', 'Account', 'Bookings', 'Cabins', 'Settings', and 'Users'. Each route is associated with a corresponding component and is nested within an 'AppLayout' component.
+- The styled components are given roles such as `table` and `row` to enhance the accessibility of the HTML structure, indicating that these styled components should be treated as a table and row.
 
-## Additional Routes
+## Stale Data Handling:
 
-In addition to the main routes, there is a login route ('login') and a wildcard route ('\*') for handling page-not-found scenarios. These routes render the 'Login' and 'PageNotFound' components, respectively.
+- A comment mentions setting the `staleTime` property to 0 seconds using React Query. This means that the data will always be considered stale, triggering a refetch on every render. This can be useful when the data needs to be consistently updated.
 
-## Summary
-
-In summary, the code sets up a React application with client-side routing, data fetching, and caching capabilities using React Router and React Query.
+Overall, this code provides a foundation for a dynamic and visually appealing cabin table component in a React application, with an emphasis on efficient data fetching and presentation.
