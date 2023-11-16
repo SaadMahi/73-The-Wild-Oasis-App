@@ -1,34 +1,28 @@
-# React CabinTable Component
+This code snippet is part of a React application that interacts with a Supabase database to fetch and delete cabin data. The focus is on using the React Query library to mutate the remote server state and automatically update the user interface.
 
-This code snippet is a React component named `CabinTable` that utilizes the React Query library to fetch and manage data from an API. The component is designed to display a table of cabin-related information and incorporates styled components for a visually appealing layout. Below is a description of the major components and functionalities within the code:
+### `getCabins` Function:
 
-## React Query Integration:
+- This function uses the Supabase client to fetch data from the 'cabins' table.
+- It utilizes the `select('*')` method to retrieve all columns.
+- If there's an error during the fetch operation, an error is logged, and an exception is thrown.
 
-- The component imports the `useQuery` hook from the `@tanstack/react-query` library to manage data fetching efficiently.
-- The `getCabins` function from the `../../services/apiCabins` file is used as the query function to fetch cabin-related data.
+### `deleteCabin` Function:
 
-## Styled Components:
+- This function is designed to delete a cabin from the 'cabins' table based on the provided ID.
+- It uses the `delete()` method of the Supabase client and specifies the condition for deletion using `eq('id', id)`.
+- Like the `getCabins` function, it handles errors by logging them and throwing an exception.
 
-- Custom styled components are defined using the `styled-components` library to create a visually appealing table layout.
-- The `Table` component represents the overall container for the table, styled with borders, background color, and rounded corners.
-- The `TableHeader` component represents the header of the table, with styled columns for different cabin attributes like name, capacity, price, and discount.
+### Usage of React Query:
 
-## Fetching and Displaying Data:
+- The comments guide through the process of integrating React Query to delete a cabin.
+- It introduces the `useMutation` hook, which is used to trigger mutations (e.g., deletion in this case).
+- The `useMutation` hook takes an object with a mutation function, which, in this case, calls the `deleteCabin` function.
+- The `onSuccess` callback is utilized to invalidate the cache, triggering a refetch of the data.
+- The `useQueryClient` hook is introduced to get access to the query client instance, which is then used to manually invalidate the query.
 
-- The `useQuery` hook is used to fetch data, and the result (loading state, data, or error) is destructured for further use.
-- The `Table` and `TableHeader` components are utilized to structure the HTML, and the data is mapped over to create `CabinRow` components for each cabin.
-- The `isLoading` state is used to display a custom spinner while the data is being fetched.
+### Additional Notes:
 
-## Date Handling:
+- The code mentions the necessity of creating a new Supabase policy to allow cabin deletion, indicating a temporary setup to permit everyone to delete.
+- There's a note about the automatic refetching behavior of React Query, ensuring that data becomes stale upon returning to the tab.
 
-- There's a comment suggesting the installation of the `date-fns` library to handle date calculations, although the actual usage of this library is not present in the provided code.
-
-## Accessibility Improvement:
-
-- The styled components are given roles such as `table` and `row` to enhance the accessibility of the HTML structure, indicating that these styled components should be treated as a table and row.
-
-## Stale Data Handling:
-
-- A comment mentions setting the `staleTime` property to 0 seconds using React Query. This means that the data will always be considered stale, triggering a refetch on every render. This can be useful when the data needs to be consistently updated.
-
-Overall, this code provides a foundation for a dynamic and visually appealing cabin table component in a React application, with an emphasis on efficient data fetching and presentation.
+This code provides a structured approach to handling data fetching and deletion, leveraging the power of React Query for efficient state management and UI updates in a React application integrated with a Supabase database.
