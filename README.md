@@ -1,28 +1,39 @@
-This code snippet is part of a React application that interacts with a Supabase database to fetch and delete cabin data. The focus is on using the React Query library to mutate the remote server state and automatically update the user interface.
+This code snippet represents a React application using the React Router for navigation, React Query for managing state, and React Hot Toast for displaying notifications. Here's a breakdown of the key components and functionalities:
 
-### `getCabins` Function:
+### React Router Setup:
 
-- This function uses the Supabase client to fetch data from the 'cabins' table.
-- It utilizes the `select('*')` method to retrieve all columns.
-- If there's an error during the fetch operation, an error is logged, and an exception is thrown.
+- Utilizes the `BrowserRouter` for handling client-side routing.
+- Defines different routes using the `Routes` and `Route` components from `react-router-dom`.
+- Sets up a default `AppLayout` that contains nested routes for various pages like Dashboard, Account, Bookings, Cabins, Settings, and Users.
+- Includes a catch-all route for any undefined paths, redirecting to a `PageNotFound` component.
+- Uses the `Navigate` component for redirection, ensuring the URL is replaced.
 
-### `deleteCabin` Function:
+### Global Styles and Layout:
 
-- This function is designed to delete a cabin from the 'cabins' table based on the provided ID.
-- It uses the `delete()` method of the Supabase client and specifies the condition for deletion using `eq('id', id)`.
-- Like the `getCabins` function, it handles errors by logging them and throwing an exception.
+- Imports a `GlobalStyles` component, presumably for applying global CSS styles.
+- Uses an `AppLayout` component as a common layout wrapper for nested routes.
 
-### Usage of React Query:
+### React Query Configuration:
 
-- The comments guide through the process of integrating React Query to delete a cabin.
-- It introduces the `useMutation` hook, which is used to trigger mutations (e.g., deletion in this case).
-- The `useMutation` hook takes an object with a mutation function, which, in this case, calls the `deleteCabin` function.
-- The `onSuccess` callback is utilized to invalidate the cache, triggering a refetch of the data.
-- The `useQueryClient` hook is introduced to get access to the query client instance, which is then used to manually invalidate the query.
+- Initializes a `QueryClient` with default options, specifically setting `staleTime` to 0 to ensure data is always considered stale.
 
-### Additional Notes:
+### React Query Devtools:
 
-- The code mentions the necessity of creating a new Supabase policy to allow cabin deletion, indicating a temporary setup to permit everyone to delete.
-- There's a note about the automatic refetching behavior of React Query, ensuring that data becomes stale upon returning to the tab.
+- Includes the `ReactQueryDevtools` component, initially set to be closed, for debugging and monitoring React Query state.
 
-This code provides a structured approach to handling data fetching and deletion, leveraging the power of React Query for efficient state management and UI updates in a React application integrated with a Supabase database.
+### React Hot Toast Integration:
+
+- Adds the `Toaster` component from `react-hot-toast` to display notifications (toasts).
+- Customizes the toast appearance and behavior using various props:
+  - `position`: Sets the position of the toasts on the screen (top-center).
+  - `gutter`: Controls the space between the toasts and the window (12 pixels).
+  - `containerStyle`: Applies custom CSS styles to the toast container (margin of 8 pixels).
+  - `toastOptions`: Configures specific options for success and error toasts, including duration and style.
+
+### Error Handling with Toasts:
+
+- Replaces traditional `alert` calls with the `toast` function from `react-hot-toast`.
+- Demonstrates the usage of both success and error toasts.
+- Provides an example (commented out) where intentionally introducing an error in the Supabase URL triggers an error toast.
+
+Overall, this React application is structured with proper routing, state management using React Query, and enhanced user experience through the use of toast notifications for success and error messages.
