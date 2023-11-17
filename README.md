@@ -1,61 +1,39 @@
-# Supabase Cabin Management
+# CreateCabinForm Component
 
-## Functionality Overview:
+This is a React component named `CreateCabinForm` that utilizes the `react-hook-form` library for handling form state and validation. Here's a breakdown of the key features and functionality:
 
-The code focuses on creating new cabins, retrieving cabin data, and deleting cabins from a Supabase database using the Supabase JavaScript library. It leverages the `useMutation()` hook from React Query for handling mutations.
+## 1. Form Setup:
 
-## Detailed Description:
+- The component imports necessary dependencies, including styled components, form-related UI components (`Input`, `Form`, `Button`, `FileInput`, `Textarea`), and hooks from `react-hook-form` and `@tanstack/react-query`.
+- It defines the form structure using these imported components and sets up the form using the `useForm` hook from `react-hook-form`.
 
-### 1. Create New Cabins (`createCabin` function):
+## 2. Validation:
 
-- **Setting Up Policies:**
+- The component performs form validation using the `register` method from `react-hook-form`.
+- Validation rules, such as `required` and `min`, are applied to various form fields, ensuring that the user provides valid input.
+- Custom validation is implemented for the "Discount" field, where the discount value must be less than or equal to the regular price.
 
-  - Describes the process of creating new policies for inserting and updating data in the Supabase database.
-  - Mentions the steps for creating these policies, including selecting templates, setting operations, and saving policies.
+## 3. Form Submission:
 
-- **API Documentation:**
+- The component uses the `handleSubmit` function from `react-hook-form` to handle form submissions.
+- The `onSubmit` function is called when the form is successfully submitted. It triggers a mutation using `useMutation` from `@tanstack/react-query`, which, upon success, displays a success toast, invalidates the query for cabin data, and resets the form.
+- The `onError` function handles errors during form submission, displaying an error toast.
 
-  - Instructs to refer to the API documentation and copy the insert code for creating new cabins.
+## 4. Error Handling:
 
-- **Error Handling:**
-  - Advises adding error handling and data return methods for the new cabin data.
-  - Specifies that the data structure matches the required shape for Supabase.
+- Form errors are extracted from the `formState` object, and error messages are displayed for each corresponding input field using the `FormRow` component.
+- The `error` prop in each `FormRow` is populated with the specific error message for that field.
 
-### 2. Use of `useMutation()` Hook:
+## 5. Reusable Components:
 
-- **Setup of `useMutation`:**
+- The code emphasizes reusability by using a custom `FormRow` component for each form field. This helps reduce code duplication and improves maintainability.
 
-  - Explains the usage of the `useMutation()` hook for mutating data on the server.
-  - Describes the returned object containing the `mutate` function and `isLoading` state.
+## 6. UI Interaction:
 
-- **Configure Mutation Function:**
+- The form includes buttons for submitting and canceling the form. The "Add Cabin" button is disabled during form submission (`isCreating` state) to prevent multiple submissions.
 
-  - Configures the `mutate` function with the `createCabin` function as the mutation function.
-  - Defines `onSuccess` and `onError` handlers for handling success and error scenarios.
+## 7. Console Logging:
 
-- **Handling Data Mutation:**
-  - Explains the need to invalidate the cabins query after a mutation to ensure updated data is fetched.
-  - Introduces the use of `useQueryClient()` for managing queries.
+- There are console log statements for debugging purposes, such as logging the `regularPrice` value and commented-out logs for errors during form submission.
 
-### 3. Finalizing the Process:
-
-- **Implementation:**
-  - Demonstrates how to use the `mutate` function and `isLoading` state to initiate the creation of a new cabin.
-  - Concludes by stating that everything works smoothly, resembling magic.
-
-## Functions:
-
-### a. `createCabin(newCabin)`:
-
-- Inserts a new cabin into the Supabase database and returns the resulting data.
-- Includes error handling to log and throw an error if the operation is unsuccessful.
-
-### b. `getCabins()`:
-
-- Retrieves all cabins from the Supabase database and returns the data.
-- Implements error handling similar to `createCabin()`.
-
-### c. `deleteCabin(id)`:
-
-- Deletes a cabin from the Supabase database based on the provided ID.
-- Includes error handling for potential errors during the deletion process.
+Overall, this component provides a structured and reusable form implementation with integrated validation and error handling using `react-hook-form`.
