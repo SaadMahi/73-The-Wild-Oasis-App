@@ -1,46 +1,61 @@
-# CreateCabinForm Component Description
+# Supabase Cabin Management
 
-This JavaScript file defines a React component named `CreateCabinForm` that utilizes the `react-hook-form` library to simplify form handling in a React Single Page Application (SPA). The form includes various input fields such as text, number, and file, along with corresponding labels and styling. Here's a breakdown of the key components and functionalities:
+## Functionality Overview:
 
-## Dependencies:
+The code focuses on creating new cabins, retrieving cabin data, and deleting cabins from a Supabase database using the Supabase JavaScript library. It leverages the `useMutation()` hook from React Query for handling mutations.
 
-The component imports necessary dependencies, including `styled-components` for styling, `react-hook-form` for form management, and various UI components (`Input`, `Form`, `Button`, `FileInput`, `Textarea`).
+## Detailed Description:
 
-## Form Styling:
+### 1. Create New Cabins (`createCabin` function):
 
-Styled components are used to define the styling for different parts of the form, such as `FormRow`, `Label`, and `Error`.
+- **Setting Up Policies:**
 
-## Form Structure:
+  - Describes the process of creating new policies for inserting and updating data in the Supabase database.
+  - Mentions the steps for creating these policies, including selecting templates, setting operations, and saving policies.
 
-The form is structured using the `Form` component, and individual form rows (`FormRow`) are created for each input field.
+- **API Documentation:**
 
-## React Hook Form Integration:
+  - Instructs to refer to the API documentation and copy the insert code for creating new cabins.
 
-- The `useForm` hook is employed to access the `register` and `handleSubmit` functions.
-- The `register` function is used to register input fields, making them managed by `react-hook-form`. This eliminates the need for manual state management.
-- Each input field is associated with a specific key (e.g., 'name', 'maxCapacity') through the spread operator (`{...register('fieldName')}`).
+- **Error Handling:**
+  - Advises adding error handling and data return methods for the new cabin data.
+  - Specifies that the data structure matches the required shape for Supabase.
 
-## Form Submission:
+### 2. Use of `useMutation()` Hook:
 
-- The form's `onSubmit` function is defined using the `handleSubmit` function obtained from `useForm`.
-- When the form is submitted, the `handleSubmit` function calls a custom `onSubmit` function, logging the data from all registered fields to the console.
+- **Setup of `useMutation`:**
 
-## Form Fields:
+  - Explains the usage of the `useMutation()` hook for mutating data on the server.
+  - Describes the returned object containing the `mutate` function and `isLoading` state.
 
-Various input fields are included in the form, such as 'Cabin name', 'Maximum capacity', 'Regular price', 'Discount', 'Description for website', and 'Cabin photo'.
-Each field is associated with a corresponding label, and appropriate input types and attributes are set.
+- **Configure Mutation Function:**
 
-## Button Actions:
+  - Configures the `mutate` function with the `createCabin` function as the mutation function.
+  - Defines `onSuccess` and `onError` handlers for handling success and error scenarios.
 
-The form includes 'Cancel' and 'Submit Cabin' buttons with associated actions. The 'Submit Cabin' button triggers the form submission, and the 'Cancel' button is of type 'reset'.
+- **Handling Data Mutation:**
+  - Explains the need to invalidate the cabins query after a mutation to ensure updated data is fetched.
+  - Introduces the use of `useQueryClient()` for managing queries.
 
-## File Input:
+### 3. Finalizing the Process:
 
-A file input field (`FileInput`) is included for uploading a cabin photo.
+- **Implementation:**
+  - Demonstrates how to use the `mutate` function and `isLoading` state to initiate the creation of a new cabin.
+  - Concludes by stating that everything works smoothly, resembling magic.
 
-## Styling Details:
+## Functions:
 
-The styling includes grid layout for form rows, alignment adjustments, and border styling for separating form rows.
-The last form row contains buttons and is flex-container styled with justified content.
+### a. `createCabin(newCabin)`:
 
-Overall, this component is designed to create a user-friendly form for inputting cabin details, with streamlined form management provided by the `react-hook-form` library.
+- Inserts a new cabin into the Supabase database and returns the resulting data.
+- Includes error handling to log and throw an error if the operation is unsuccessful.
+
+### b. `getCabins()`:
+
+- Retrieves all cabins from the Supabase database and returns the data.
+- Implements error handling similar to `createCabin()`.
+
+### c. `deleteCabin(id)`:
+
+- Deletes a cabin from the Supabase database based on the provided ID.
+- Includes error handling for potential errors during the deletion process.
