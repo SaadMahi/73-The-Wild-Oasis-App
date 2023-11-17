@@ -1,39 +1,46 @@
-This code snippet represents a React application using the React Router for navigation, React Query for managing state, and React Hot Toast for displaying notifications. Here's a breakdown of the key components and functionalities:
+# CreateCabinForm Component Description
 
-### React Router Setup:
+This JavaScript file defines a React component named `CreateCabinForm` that utilizes the `react-hook-form` library to simplify form handling in a React Single Page Application (SPA). The form includes various input fields such as text, number, and file, along with corresponding labels and styling. Here's a breakdown of the key components and functionalities:
 
-- Utilizes the `BrowserRouter` for handling client-side routing.
-- Defines different routes using the `Routes` and `Route` components from `react-router-dom`.
-- Sets up a default `AppLayout` that contains nested routes for various pages like Dashboard, Account, Bookings, Cabins, Settings, and Users.
-- Includes a catch-all route for any undefined paths, redirecting to a `PageNotFound` component.
-- Uses the `Navigate` component for redirection, ensuring the URL is replaced.
+## Dependencies:
 
-### Global Styles and Layout:
+The component imports necessary dependencies, including `styled-components` for styling, `react-hook-form` for form management, and various UI components (`Input`, `Form`, `Button`, `FileInput`, `Textarea`).
 
-- Imports a `GlobalStyles` component, presumably for applying global CSS styles.
-- Uses an `AppLayout` component as a common layout wrapper for nested routes.
+## Form Styling:
 
-### React Query Configuration:
+Styled components are used to define the styling for different parts of the form, such as `FormRow`, `Label`, and `Error`.
 
-- Initializes a `QueryClient` with default options, specifically setting `staleTime` to 0 to ensure data is always considered stale.
+## Form Structure:
 
-### React Query Devtools:
+The form is structured using the `Form` component, and individual form rows (`FormRow`) are created for each input field.
 
-- Includes the `ReactQueryDevtools` component, initially set to be closed, for debugging and monitoring React Query state.
+## React Hook Form Integration:
 
-### React Hot Toast Integration:
+- The `useForm` hook is employed to access the `register` and `handleSubmit` functions.
+- The `register` function is used to register input fields, making them managed by `react-hook-form`. This eliminates the need for manual state management.
+- Each input field is associated with a specific key (e.g., 'name', 'maxCapacity') through the spread operator (`{...register('fieldName')}`).
 
-- Adds the `Toaster` component from `react-hot-toast` to display notifications (toasts).
-- Customizes the toast appearance and behavior using various props:
-  - `position`: Sets the position of the toasts on the screen (top-center).
-  - `gutter`: Controls the space between the toasts and the window (12 pixels).
-  - `containerStyle`: Applies custom CSS styles to the toast container (margin of 8 pixels).
-  - `toastOptions`: Configures specific options for success and error toasts, including duration and style.
+## Form Submission:
 
-### Error Handling with Toasts:
+- The form's `onSubmit` function is defined using the `handleSubmit` function obtained from `useForm`.
+- When the form is submitted, the `handleSubmit` function calls a custom `onSubmit` function, logging the data from all registered fields to the console.
 
-- Replaces traditional `alert` calls with the `toast` function from `react-hot-toast`.
-- Demonstrates the usage of both success and error toasts.
-- Provides an example (commented out) where intentionally introducing an error in the Supabase URL triggers an error toast.
+## Form Fields:
 
-Overall, this React application is structured with proper routing, state management using React Query, and enhanced user experience through the use of toast notifications for success and error messages.
+Various input fields are included in the form, such as 'Cabin name', 'Maximum capacity', 'Regular price', 'Discount', 'Description for website', and 'Cabin photo'.
+Each field is associated with a corresponding label, and appropriate input types and attributes are set.
+
+## Button Actions:
+
+The form includes 'Cancel' and 'Submit Cabin' buttons with associated actions. The 'Submit Cabin' button triggers the form submission, and the 'Cancel' button is of type 'reset'.
+
+## File Input:
+
+A file input field (`FileInput`) is included for uploading a cabin photo.
+
+## Styling Details:
+
+The styling includes grid layout for form rows, alignment adjustments, and border styling for separating form rows.
+The last form row contains buttons and is flex-container styled with justified content.
+
+Overall, this component is designed to create a user-friendly form for inputting cabin details, with streamlined form management provided by the `react-hook-form` library.
