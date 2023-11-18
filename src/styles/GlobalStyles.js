@@ -131,6 +131,7 @@ select {
 
 button {
   cursor: pointer;
+ color: var(--color-blue-100);
 }
 
 *:disabled {
