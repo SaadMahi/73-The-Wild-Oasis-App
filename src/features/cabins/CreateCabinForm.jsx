@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import styled from 'styled-components';
 
 import Input from '../../ui/Input';
 import Form from '../../ui/Form';
@@ -12,86 +11,102 @@ import { createCabin } from '../../services/apiCabins';
 import toast from 'react-hot-toast';
 import FormRow from '../../ui/FormRow';
 
-/** REACT HOOK FORM
- * So where react hook shines the most is in form error validation,
- * so let's now learn how to use those feature to our advantage
- *
- * 1) So let's do the form validation, so we can add some more
- * stuff to this register function
+/** IMAGE/FILE UPLOADS ON SUPABASE BUCKET
+ * Now we will be aking this part of form to work
  * ! fig: 1
- * so in particular as an second argument pass in an object for validation
- * and in here we can do many many things
- * ! fig: 1.1
- * let's do some, first one is required property and on this we can set an error msg
- * i) required: 'This field is required'
- * so let's grab this and paste in every input as all of these is required, we
- * will take care of the image later justleave it as it is
+ *
+ * 1) so let's start with our step no. 1 like always, registering the field
+ * i) let call it image(id)
+ * ii) set it's type to 'file'
  * ! fig: 2
- * Now before we test this, what we need to know is that, this handle submit function
+ * iii) let's checkout this FileInput component once
  * ! fig: 3
- * is called each time we attempt to submit the form and at that point all our
- * validations will be executed, so all of these required we passed in will
- * be checked and in case even if there is one error encountered then this handleSubmit
- * will not call the onsubmit function here but instead it will call the second
- * function that we will pass in here, so let's call it onError, and this
- * error function instead of data receives an actual error in parameter when defined it
- * as errors
- * ! fig: 3.1
- * Let's try this, leave some input fields empty and log to the console
+ * as we can see it's just an another input element but if
+ * we want to pass in attributes to this input element
+ * we can do that like this:
  * ! fig: 4
- * and we get those errors in these console and onError function is called instead of
- * onSubmit function, so this is the most basic validation
+ * so this styled component will be reusable
  *
- * ii) next we can set the minimum value or max value that must be filled
+ * so now let's select a cabin photo now
  * ! fig: 5
- *
- * iii) next condition we can work on is the discount price
- * we cannot keep the price of 100 and discount of 200, the discount
- * must we lower than the price
+ * so let's fill in the form, submit and check on the log
  * ! fig: 6
- * a) and in this situation we can write our own custom validation function
- * and for that we specify 'validate': and then in this we rite a callBack function
- * and this callback gets as an argument the current value that is currently
- * being input in the field and then here we can write any kind of logic we want
- * and as soon as that logic returns true then the field will be correctly validated
- * and we specify an || logic if the value is not true return message
- * ! fig: 7
- * but ofcourse we don't want to compare he value with 100, as regular
- * price can be anything not 100, so how will we get this other input
- * fields price in this input field?
+ * we see that it does contains the image
+ * so now we have to pass this into our mutate function
+ * ! fig: 7, fig: 7.1
+ *
+ * 2) Now let's go to our createCabin function in apiCabins.js
+ * as this is where we will be uploading our image
+ * i) so first of all we create the cabin  and only if that is successful
+ * ii) then we upload the image
  * ! fig: 8
- *
- * well there's a nice function that comes in here with the useForm which
- * is called getValues
+ * iii) now what we still need to do is specify the image path in this [newCabin]
+ * that we create, because in our supabase data in our first row we already have
+ * an image but the only way we get the image here is with the file name
  * ! fig: 9
- * so in place of 100 we can call this function, so
- * after calling this it returns an object of values and from there
- * we can get the regularPrice
+ * from our bucket, so with this file name we connect the cabin row ith the corresponding
+ * cabin image. So let's grab this URL from here as we will need this
+ * ! fig: 9.2
+ * So we not only need to upload the image but also specify the image name
+ * and path to the image in the bucket right here in the [newCabin] that we insert
+ * a) Our fist step will to to create a URL like this we just copied,
+ * it contains the path to the bucket along with a unique cabin name
  * ! fig: 10
- * so now the value should be equal or greater than the regular price.
- * and that works good...
+ * i) so we need to make sure the cabin image name stays unique
  * ! fig: 11
- *
- * 2) Now our next task is how do we get these error messages from our
- * console.log into our application, well once again we can get these
- * errors from the useForm hook by using
- * * formState
- * and from this object we can read the errors property
+ * here we have used Math.random to generate randoms numbers to keep it unique
+ * and attached it with image.
+ * but here we could get in trouble, if by change this cabin image name
+ * contains any slashes (/) then supabase will create folders based on that
+ * and we ofcourse don't want that, so let's replace all the slashes with nothing
+ * ! fig: 11.1
+ * ii) now let's create the image path, this is what we will store inside
+ * of the cabin row.
+ * now let's grab this supabaseURL which we already have in supabase.js
+ * ! fig: 11.2, 11.3
+ * and then we spread and provide the image path
  * ! fig: 12
- * so as we can see these errors look exactly as we saw previously.
- * and so now in the input field we can use the Error style component
- * and display the error message incase there is an error
- * ! fig: 13
- * and that's it...
+ * So that's the first part which is finished now
  *
- * 3) now there is alot of repetition of code let's create a reusable component
- * accordingly
+ * 3) Now we want to upload the image itself, so now we are interested in this
+ * uploading a file
+ * ! fig: 13
+ * now here they say that RLS is required to upload a file
+ * ! fig: 13.1
+ * and we haven't done this yet, so let's do that, so we need to go to bucket,
+ * policies then add new policy
+ * ! fig: 13.2
+ * i) select full customization
+ * ii) tick all Allowed operations
+ * iii) give policy name as: Allow all operations
+ * iv) click review
+ * v) save policy
+ * ! fig: 13.3
+ * now let's see how we can upload the file as we have now completed
+ * the RLS process
+ * ! fig: 14
+ * so let's grab all of this, and place that here
+ * ! fig: 14.1
+ * vi) let's now modify it and we are done
+ * ! fig: 15
+ * this is how we upload images to supabase
+ *
+ * 4) Now the final thing we want to do is to prevent new cabin from being created
+ * in case that this file didn't upload correctly, so we can delete the cabin
+ * if there is an error uploading the image
+ * ! fig: 16
+ * also let's throw an error message
+ * ! fig: 17
+ * Finally we are done, let's try adding a cabin and we get our cabin sucessfully
+ * ! fig: 18
+ * and if we check in our bucket we see that image
+ * ! fig: 19
  */
 
 function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
 
-  console.log(getValues().regularPrice);
+  // //console.log(getValues().regularPrice);
 
   const { errors } = formState;
 
@@ -108,11 +123,12 @@ function CreateCabinForm() {
   });
 
   const onSubmit = (data) => {
-    mutate(data);
+    // //console.log({ ...data, image: data.image[0].name });
+    mutate({ ...data, image: data.image[0] });
   };
 
   const onError = (errors) => {
-    // console.log(errors);
+    // //console.log(errors);
   };
 
   return (
@@ -193,7 +209,13 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow label='Cabin photo'>
-        <FileInput id='image' accept='image/*' />
+        <FileInput
+          id='image'
+          accept='image/*'
+          {...register('image', {
+            required: 'This field is required',
+          })}
+        />
       </FormRow>
 
       <FormRow>
